@@ -37,6 +37,7 @@ def compare_sheets(current_dicts,exist_dicts):
 
 def judge_gaparas(wb,current_dicts,ga_para_keys):
     sheets = wb.sheetnames
+    print(sheets)
     for sh in sheets:
         ws = wb[sh]
         for row in ws.iter_rows(min_row=2, max_row=2,max_col=len(ga_para_keys)):
@@ -54,7 +55,6 @@ def save_gaparas(file_name,ga_para_keys,ga_para_values):
     current_dicts = dict(zip(ga_para_keys,ga_para_values))
     sheet_name,sheet_num = judge_gaparas(wb,current_dicts,ga_para_keys)
     if sheet_name == None:
-        print(sheet_num)
         wb.create_sheet('case{}'.format(sheet_num-1))
         sheets = wb.sheetnames
         ws = wb[sheets[-1]]
