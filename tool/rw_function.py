@@ -54,6 +54,7 @@ def save_gaparas(file_name,ga_para_keys,ga_para_values):
     current_dicts = dict(zip(ga_para_keys,ga_para_values))
     sheet_name,sheet_num = judge_gaparas(wb,current_dicts,ga_para_keys)
     if sheet_name == None:
+        print(sheet_num)
         wb.create_sheet('case{}'.format(sheet_num-1))
         sheets = wb.sheetnames
         ws = wb[sheets[-1]]
