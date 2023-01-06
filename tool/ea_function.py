@@ -104,3 +104,34 @@ def print_pseudo_weights(res,weights,dim1,dim2):
     plt.scatter(F[i, dim1], F[i, dim2], marker="x", color="red", s=200)
     plt.title("Objective Space")
     plt.show()
+    
+def hv_algorithm(res,hv,ref_point):
+    X, F = res.opt.get("X", "F")
+    hist = res.history
+    n_evals = []             # corresponding number of function evaluations\
+    hist_F = []              # the objective space values in each generation
+    hist_cv = []             # constraint violation in each generation
+    hist_cv_avg = []         # average constraint violation in the whole population
+    for algo in hist:
+        # store the number of function evaluations
+        n_evals.append(algo.evaluator.n_eval)
+        # retrieve the optimum from the algorithm
+        opt = algo.opt
+        # store the least contraint violation and the average in each population
+        hist_cv.append(opt.get("CV").min())
+        hist_cv_avg.append(algo.pop.get("CV").mean())
+        # filter out only the feasible and append and objective space values
+        feas = np.where(opt.get("feasible"))[0]
+        hist_F.append(opt.get("F")[feas])
+    approx_ideal = F.min(axis=0)
+    approx_nadir = F.max(axis=0)
+    data_hv = None
+    if hv:
+        data_hv = calc_HV(approx_ideal,approx_nadir,hist_F,n_evals,ref_point)
+    return data_hv
+
+def calc_HV(approx_ideal,approx_nadir,hist_F,n_evals,ref_point):
+    metric = Hypervolume(ref_point=ref_point,norm_ref_point=False,zero_to_one=True,
+                     ideal=approx_ideal,nadir=approx_nadir)
+    hv = [metric.do(_F) for _F in hist_F]
+    return [n_evals,hv]
