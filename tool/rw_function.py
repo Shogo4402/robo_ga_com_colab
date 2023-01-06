@@ -47,14 +47,14 @@ def judge_gaparas(wb,current_dicts,ga_para_keys):
         sheet_name = compare_sheets(current_dicts,exist_dicts)
         if sheet_name!=None:
             return sh
-    return None
+    return None,len(sheets)
         
-def save_gaparas(file_name,ga_para_keys,ga_para_values,sheet_NO):
+def save_gaparas(file_name,ga_para_keys,ga_para_values):
     wb = openpyxl.load_workbook(file_name)
     current_dicts = dict(zip(ga_para_keys,ga_para_values))
-    sheet_name = judge_gaparas(wb,current_dicts,ga_para_keys)
+    sheet_name,sheet_num = judge_gaparas(wb,current_dicts,ga_para_keys)
     if sheet_name == None:
-        wb.create_sheet('case{}'.format(sheet_NO))
+        wb.create_sheet('case{}'.format(sheet_num-1))
         sheets = wb.sheetnames
         ws = wb[sheets[-1]]
         for i in range(len(ga_para_keys)):
