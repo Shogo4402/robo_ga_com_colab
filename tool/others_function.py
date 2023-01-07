@@ -63,7 +63,7 @@ def efficient_fpos_produce():
     for i in range(10):
         fx = (i+1)*0.1
         fy = -0.5
-        fpos_xyt = [fx,fy,0]
+        fpos_xyt = [fx,fy,-math.pi/2]
         fpos_list.append(fpos_xyt)
     return np.array(fpos_list)
 
