@@ -90,7 +90,7 @@ def fuzzy_control_new_set(problem,pop_no,pop):
     if pop_no != None:
         genes = pop[pop_no].get("X")
         genes = genes.tolist()
-        if (problem.ruch_count1 != 0) or (problem.ruch_count2!=0) == int:
+        if (problem.ruch_count1 != 0) or (problem.ruch_count2!=0) == :
             Kis = problem.Ks_divi_list(genes[0:-(problem.ruch_count1+problem.ruch_count2)],problem.divi_list)
             ruge_list = genes[len(genes[0:-(problem.ruch_count1+problem.ruch_count2)]):]
             problem.obj_control.fuzzy_rule1 = problem.rule_changer(problem.obj_control.fuzzy_rule1,problem.ruch_count1,
