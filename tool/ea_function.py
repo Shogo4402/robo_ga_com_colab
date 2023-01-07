@@ -40,7 +40,7 @@ def print_HV(approx_ideal,approx_nadir,hist_F,n_evals,ref_point):
     metric = Hypervolume(ref_point=ref_point,norm_ref_point=False,zero_to_one=True,
                      ideal=approx_ideal,nadir=approx_nadir)
     hv = [metric.do(_F) for _F in hist_F]
-    plt.figure(figsize=(3, 3))
+    plt.figure(figsize=(7, 7))
     plt.plot(n_evals, hv,  color='black', lw=0.7, label="Avg. CV of Pop")
     plt.scatter(n_evals, hv,  facecolor="none", edgecolor='black', marker="p")
     plt.title("Convergence")
