@@ -288,7 +288,7 @@ class obj_func:
             #    ep = self.lms3[0][0:2]
             new_pos = of.pos_conversion([x,y,th],sp,ep)
             y_sum+=abs(new_pos[1])
-        return y_sum
+        return y_sum/(len(value[4]))
 
     def direction_shake_calc(self,thetas):
         dth_sum = 0
@@ -297,7 +297,7 @@ class obj_func:
             if del_th >= math.pi :
                 del_th = 2*math.pi-del_th
             dth_sum +=del_th
-        return dth_sum
+        return dth_sum/(len(thetas)-1)
 
     def speed_average_calc(self,speed):
         average_speed = sum(speed)/len(speed)
