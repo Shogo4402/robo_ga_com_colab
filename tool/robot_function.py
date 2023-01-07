@@ -77,7 +77,8 @@ class obj_func:
 
         self.arrival_point = None
         self.average_apoint = []
-        self.arrvial_time = None        
+        self.arrvial_time = None    
+        self.detail_end_time = None
         
         
     def KandLMset(self,Kis,lms):
@@ -97,8 +98,8 @@ class obj_func:
             move_end = self.one_step(self.time_interval,self.time_detail)
             if move_end==True:
                 self.arrival_point = self.sum_no
-                self.arrvial_time = float(i/10)
-                return float(i/10)
+                self.arrvial_time = float(i/10) + self.detail_end_time 
+                return self.arrvial_time
             self.arrival_point = self.sum_no
         self.arrvial_time = None
         return float(self.time_limit)
@@ -131,6 +132,7 @@ class obj_func:
     
     def decision(self,pose):
         #目標軌道点の入れ替え
+        orbit_count = 0
         for point in self.orbit_que:
             change_r = math.sqrt((point[0]-self.lms3[self.now_no][0])**2+(point[1]-self.lms3[self.now_no][1])**2)
             if change_r <= self.point_r: #(m)
@@ -140,6 +142,7 @@ class obj_func:
                 self.next_no+=1
                 self.sum_no+=1
                 if self.sum_no ==self.goal_no:
+                    self.detail_end_time = float(orbit_count)/10
                     self.move_end=True
                     #return 0,0
                 if self.past_no == self.no_len:
@@ -158,7 +161,7 @@ class obj_func:
                         rad_v = rad_v + 2*math.pi
                     self.li_direction.append([rad_v,pose[2]])
                     self.next_direction = False
-        
+            orbit_count += 1
         #制御の入力から出力まで
         delta_degrees = int(self.fuzzy2.fuzzy_calc(self.Input2(pose)))
         nu_degrees = int(self.fuzzy1.fuzzy_calc(self.Input1(pose,delta_degrees)))
