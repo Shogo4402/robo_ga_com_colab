@@ -308,7 +308,7 @@ def save_control_values(obj_control):
     nd = obj_control.li_direction
     dis = obj_control.error_distance_calc([1,x,y,t,n])
     di_delta = obj_control.direction_shake_calc(t)
-    speed_avg =obj_control.speed_average_calc(v)
+    speed_avg =1/(obj_control.speed_average_calc(v)+1)
     next_di = obj_control.next_direction_error_calc(nd)
     return [dis,di_delta,speed_avg,next_di]
 
