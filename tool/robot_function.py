@@ -253,7 +253,7 @@ class obj_func:
                 self.object_dicts["direction_shake"] = fitz
             if 'speed' in self.object_items:
                 fits += self.speed_average_calc(value[5])/self.lms.shape[0]
-                self.object_dicts["speed"] = 1/fits
+                self.object_dicts["speed"] = 1/(fits+1)
             if 'next_direction' in self.object_items:
                 fitd += self.next_direction_error_calc(value[6])/self.lms.shape[0]
                 self.object_dicts["next_direction"] = fitd
