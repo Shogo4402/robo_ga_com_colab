@@ -270,7 +270,7 @@ def straight_course(robot,Kis):
     for i in range(3):
         for j in range(8):
             fpos = [0.5*i,0,j*math.pi/4]
-            rf.save_drive_orbit(robot,Kis,fpos,lms,20,False,3)
+            rf.save_drive_orbit(robot,Kis,fpos,lms,30,False,3)
             t = robot.arrvial_time
             v = save_control_values(robot)
             v.insert(0,t)
