@@ -136,11 +136,12 @@ def calc_HV(approx_ideal,approx_nadir,hist_F,n_evals,ref_point):
     hv = [metric.do(_F) for _F in hist_F]
     return [n_evals,hv]
 
-def display_HV(x,y):
+def display_HV(x,y,savename):
     plt.figure(figsize=(3, 3))
     plt.plot(x, y,  color='black', lw=0.7, label="Avg. CV of Pop")
     plt.scatter(x, y,  facecolor="none", edgecolor='black', marker="p")
     plt.title("Convergence")
     plt.xlabel("Function Evaluations")
     plt.ylabel("Hypervolume")
+    plt.savefig(savename)  
     plt.show()
