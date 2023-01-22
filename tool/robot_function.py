@@ -271,6 +271,7 @@ class obj_func:
 
     def error_distance_calc(self,value):
         y_sum=0
+        xyt_list = []
         for i in range(len(value[4])):
             x = value[1][i]
             y = value[2][i]
@@ -290,8 +291,20 @@ class obj_func:
             #    sp = self.lms3[2][0:2]
             #    ep = self.lms3[0][0:2]
             new_pos = of.pos_conversion([x,y,th],sp,ep)
-            y_sum+=abs(new_pos[1])
-        return y_sum/(len(value[4]))
+            xyt_list.append(new_pos)
+        xyt_arr = np.array(xyt_list)
+        now_nos_arr = np.array(value[4])
+        error_sum = []
+        add = 0
+        max_no = np.max(now_nos_arr)
+        for j in range(1,max_no+1):
+            length = now_nos_arr[np.where(now_nos_arr==j)].shape[0]
+            for i in range(length-1):
+                delta_x = abs(xyt_arr[i+add][0]-xyt_arr[i+1+add][0])
+                value = (abs(xyt_arr[i+add][1])+abs(xyt_arr[i+add+1][1]))*delta_x/2
+                error_sum.append(value)
+            add += length
+        return sum(error_sum)
 
     def direction_shake_calc(self,thetas):
         dth_sum = 0
@@ -300,7 +313,7 @@ class obj_func:
             if del_th >= math.pi :
                 del_th = 2*math.pi-del_th
             dth_sum +=del_th
-        return dth_sum/(len(thetas)-1)
+        return dth_sum
 
     def speed_average_calc(self,speed):
         average_speed = sum(speed)/len(speed)
